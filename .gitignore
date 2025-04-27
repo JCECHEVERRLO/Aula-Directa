@@ -1,0 +1,14 @@
+# Ignorar node_modules
+node_modules/
+
+# Ignorar archivos .env (como archivos de configuración con claves secretas)
+.env
+
+# Ignorar archivos de log
+*.log
+
+# Ignorar carpetas del sistema (como .DS_Store en macOS)
+.DS_Store
+
+# Ignorar carpetas o archivos temporales
+*.tmp
