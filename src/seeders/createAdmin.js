@@ -11,8 +11,8 @@ const User = defineUser(sequelize, DataTypes); // instancia del modelo
     const hash = await bcrypt.hash("admin123", 10);
 
     const admin = await User.create({
-      name: 'Admin',
-      email: 'admin@example.com',
+      name: 'Juan Pérez',
+      email: 'admin@example.co',
       password: hash,
       role: 'admin'
     });
