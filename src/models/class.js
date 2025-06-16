@@ -1,15 +1,19 @@
 'use strict';
-const { Model } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');  // ✅ Importa correctamente `Model`
 
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize) => {
   class Class extends Model {
     static associate(models) {
-      // Associations can be defined here
-      // Por ejemplo: Class.belongsToMany(models.Teacher, { through: 'TeacherClasses' })
+      // Aquí puedes definir relaciones si es necesario
     }
   }
 
   Class.init({
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -18,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Class',
     tableName: 'classes',
-    timestamps: true,
+    timestamps: false  // ✅ Ajusta los timestamps según lo necesites
   });
 
   return Class;
