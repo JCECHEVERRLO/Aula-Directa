@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 const sequelize = require('./config/database'); // asegúrate que está exportado con module.exports
 const userRoutes = require('./routes/userRoutes');
 const classRoutes = require('./routes/classRoutes'); // Importamos las nuevas rutas
+const gradeRoutes = require('./routes/gradeRoutes'); // Importamos las rutas de Grado
+
 const cors = require('cors');
 
 dotenv.config();
@@ -21,6 +23,9 @@ app.use('/api/users', userRoutes);
 
 // Nueva ruta para clases
 app.use('/api/classes', classRoutes); // Agregamos las rutas del modelo Class
+
+// Nueva ruta para grados
+app.use('/api/grades', gradeRoutes); // Agregamos las rutas del modelo Grade
 
 // Conexión a la DB
 sequelize.authenticate()

@@ -1,5 +1,5 @@
 // controllers/userController.js
-const { User } = require('../models');
+const { User, Parent, Teacher } = require('../models'); // 👈 incluye los modelos
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -48,13 +48,30 @@ exports.createUser = async (req, res) => {
   const { name, email, password, role } = req.body;
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
+
     const newUser = await User.create({
       name,
       email,
       password: hashedPassword,
       role: role || 'user'
     });
-    res.status(201).json({ message: 'Usuario creado', user: { id: newUser.id, name: newUser.name, email: newUser.email, role: newUser.role } });
+
+    // 👇 crea entrada en tabla parents o teachers según el rol
+    if (role === 'parent') {
+      await Parent.create({ user_id: newUser.id });
+    } else if (role === 'teacher') {
+      await Teacher.create({ user_id: newUser.id });
+    }
+
+    res.status(201).json({
+      message: 'Usuario creado',
+      user: {
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role
+      }
+    });
   } catch (err) {
     res.status(500).json({ message: 'Error al crear usuario', error: err.message });
   }
@@ -71,9 +88,11 @@ exports.updateUser = async (req, res) => {
       email: email || user.email,
       role: role || user.role
     };
+
     if (password) updatedData.password = await bcrypt.hash(password, 10);
 
     await user.update(updatedData);
+
     res.json({ message: 'Usuario actualizado' });
   } catch (err) {
     res.status(500).json({ message: 'Error al actualizar usuario', error: err.message });
