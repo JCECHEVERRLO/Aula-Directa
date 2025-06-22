@@ -4,6 +4,8 @@ const sequelize = require('./config/database'); // asegúrate que está exportad
 const userRoutes = require('./routes/userRoutes');
 const classRoutes = require('./routes/classRoutes'); // Importamos las nuevas rutas
 const gradeRoutes = require('./routes/gradeRoutes'); // Importamos las rutas de Grado
+const studentRoutes = require('./routes/studentRoutes'); // Importamos las rutas de Estudiante
+const parentRoutes = require('./routes/parentRoutes'); // Importamos las rutas de Padre
 
 const cors = require('cors');
 
@@ -26,6 +28,13 @@ app.use('/api/classes', classRoutes); // Agregamos las rutas del modelo Class
 
 // Nueva ruta para grados
 app.use('/api/grades', gradeRoutes); // Agregamos las rutas del modelo Grade
+
+// Nueva ruta para estudiantes
+app.use('/api/students', studentRoutes); // Agregamos las rutas del modelo Student
+
+// Nueva ruta para padres
+app.use('/api/parents', parentRoutes); // Agregamos las rutas del modelo Parent
+
 
 // Conexión a la DB
 sequelize.authenticate()
