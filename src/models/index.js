@@ -11,6 +11,7 @@ db.Grade = require('./grade')(sequelize, Sequelize.DataTypes);
 db.Parent = require('./parent')(sequelize, Sequelize.DataTypes);
 db.Teacher = require('./teacher')(sequelize, Sequelize.DataTypes);
 db.Student = require('./student')(sequelize, Sequelize.DataTypes); // no olvides este si ya lo tienes
+db.ClassGrade = require('./classGrade')(sequelize, Sequelize.DataTypes);
 
 // Asociaciones
 Object.keys(db).forEach(modelName => {
