@@ -19,6 +19,7 @@ const studentRoutes = require('./routes/studentRoutes');
 const parentRoutes = require('./routes/parentRoutes');
 const classGradeRoutes = require('./routes/classGradeRoutes');
 const teacherRoutes = require('./routes/teacherRoutes');
+const asistenciaRoutes = require('./routes/asistenciaRoutes');
 
 // 🧠 Funcionalidades clave
 const taskRoutes = require('./routes/taskRoutes');
@@ -34,7 +35,7 @@ app.use('/api/class-grades', classGradeRoutes);
 app.use('/api/teachers', teacherRoutes);
 app.use('/api/tareas', taskRoutes);
 app.use('/api/calificaciones', calificacionesRoutes);
-
+app.use('/api/asistencia', asistenciaRoutes);
 // 🌐 Ruta raíz
 app.get('/', (req, res) => {
   res.send('Servidor backend funcionando 🚀');
