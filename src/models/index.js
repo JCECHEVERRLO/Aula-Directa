@@ -1,23 +1,33 @@
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
 const Sequelize = require('sequelize');
 const sequelize = require('../config/database');
 
 const db = {};
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+const basename = path.basename(__filename);
 
-db.User = require('./user')(sequelize, Sequelize.DataTypes);
-db.Class = require('./Class')(sequelize, Sequelize.DataTypes);
-db.Grade = require('./grade')(sequelize, Sequelize.DataTypes);
-db.Parent = require('./parent')(sequelize, Sequelize.DataTypes);
-db.Teacher = require('./teacher')(sequelize, Sequelize.DataTypes);
-db.Student = require('./student')(sequelize, Sequelize.DataTypes); // no olvides este si ya lo tienes
-db.ClassGrade = require('./classGrade')(sequelize, Sequelize.DataTypes);
+// 1. Cargar todos los modelos y almacenarlos por nombre definido en modelName
+fs.readdirSync(__dirname)
+  .filter(file =>
+    file !== basename &&
+    file.endsWith('.js') &&
+    !file.startsWith('.')
+  )
+  .forEach(file => {
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    db[model.name] = model; // ← Aquí usamos `model.name`, que viene de `modelName`
+  });
 
-// Asociaciones
+// 2. Asociar todos los modelos después de cargarlos
 Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
+  if (typeof db[modelName].associate === 'function') {
+    db[modelName].associate(db); // ← Pasamos todos los modelos al método associate
   }
 });
+
+db.sequelize = sequelize;
+db.Sequelize = Sequelize;
 
 module.exports = db;

@@ -4,13 +4,18 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Teacher extends Model {
     static associate(models) {
-      // A Teacher belongs to a User
       Teacher.belongsTo(models.User, {
         foreignKey: 'user_id',
         as: 'user',
       });
+
+      Teacher.hasMany(models.Classgrade, {
+        foreignKey: 'teacher_id',
+        as: 'classgrades',
+      });
     }
   }
+
   Teacher.init({
     user_id: {
       type: DataTypes.INTEGER,
@@ -21,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Teacher',
     tableName: 'teachers',
     timestamps: true,
+    underscored: false,
   });
 
   return Teacher;

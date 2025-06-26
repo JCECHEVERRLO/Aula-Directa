@@ -1,4 +1,4 @@
-const { Student, Grade, Parent } = require('../models');
+const { Student, Grade, Parent,User } = require('../models');
 
 exports.getAll = async (req, res) => {
   try {
@@ -62,4 +62,37 @@ exports.delete = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: 'Error al eliminar estudiante', error: err.message });
   }
+
+  
 };
+
+exports.getByGrade = async (req, res) => {
+  const { gradeId } = req.params;
+
+  try {
+    const students = await Student.findAll({
+      where: { grade_id: gradeId },
+      attributes: ['id', 'name', 'grade_id'],
+      include: [
+        {
+          model: Parent,
+          as: 'parent',
+          include: [
+            {
+              model: User,
+              as: 'user', // asegúrate de que esta relación esté definida en tus modelos
+              attributes: ['id', 'name', 'email']
+            }
+          ]
+        }
+      ]
+    });
+
+    res.json(students);
+  } catch (err) {
+    console.error('❌ Error al obtener estudiantes por grado:', err.message);
+    res.status(500).json({ message: 'Error al obtener estudiantes', error: err.message });
+  }
+};
+
+  

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const classGradeController = require('../controllers/classGradeController');
 
+
 router.get('/', classGradeController.getAll);
 router.get('/:id', classGradeController.getById);
 router.post('/', classGradeController.create);

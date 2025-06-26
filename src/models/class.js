@@ -1,10 +1,13 @@
 'use strict';
-const { Model, DataTypes } = require('sequelize');  // ✅ Importa correctamente `Model`
+const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   class Class extends Model {
     static associate(models) {
-      // Aquí puedes definir relaciones si es necesario
+      Class.hasMany(models.Classgrade, {
+        foreignKey: 'class_id',
+        as: 'classgrades',
+      });
     }
   }
 
@@ -22,7 +25,7 @@ module.exports = (sequelize) => {
     sequelize,
     modelName: 'Class',
     tableName: 'classes',
-    timestamps: false  // ✅ Ajusta los timestamps según lo necesites
+    timestamps: false,
   });
 
   return Class;

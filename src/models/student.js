@@ -4,13 +4,11 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Student extends Model {
     static associate(models) {
-      // Student belongs to a Grade
       Student.belongsTo(models.Grade, {
         foreignKey: 'grade_id',
         as: 'grade',
       });
 
-      // Student belongs to a Parent
       Student.belongsTo(models.Parent, {
         foreignKey: 'parent_id',
         as: 'parent',
@@ -28,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       references: {
         model: 'grades',
-        key: 'id'
+        key: 'id',
       },
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL',
@@ -38,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       references: {
         model: 'parents',
-        key: 'id'
+        key: 'id',
       },
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL',

@@ -4,16 +4,16 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Qualification extends Model {
     static associate(models) {
-      // Qualification belongs to a Task
+      // Calificación pertenece a una tarea
       Qualification.belongsTo(models.Task, {
         foreignKey: 'task_id',
-        as: 'task',
+        as: 'tarea'
       });
 
-      // Qualification belongs to a Student
+      // Calificación pertenece a un estudiante
       Qualification.belongsTo(models.Student, {
         foreignKey: 'student_id',
-        as: 'student',
+        as: 'estudiante'
       });
     }
   }
@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     score: {
-      type: DataTypes.DECIMAL(5,2),
+      type: DataTypes.DECIMAL(5, 2),
       allowNull: false,
     },
     comment: {
@@ -38,9 +38,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Qualification',
-    tableName: 'Qualifications',  // 👈 Table in plural, English
+    tableName: 'qualifications',
     timestamps: true,
-    underscored: true,  // 👈 uses created_at and updated_at
+    underscored: true,
   });
 
   return Qualification;
